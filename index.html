@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+        background-color: rgb(186, 178, 178);
+        text-align: center;
+        }
+        th, td {
+            border: 1px solid rgb(196, 114, 114);
+            
+        }
+        table {
+        border-collapse: collapse;
+        margin: 100px auto;
+        border: 5px solid rgb(237, 113, 163);
+        
+        }
+        td {
+        width: 70px;
+        height: 70px;
+        text-align: center;
+        }
+        button{
+            background-color: rgb(186, 113, 163);
+            color: rgb(255, 240, 254);
+            height: 29px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 1s;
+        }
+        button:hover{
+            background-color: rgb(100, 40, 85);
+        }
+    </style>
+</head>
+<body>
+
+<table id="randomTable">
+    <tbody></tbody>
+</table>
+
+<button onclick="addRandomNumber()">Добавить число</button>
+
+<script>
+    let randomNumbers = Array.from({ length: 36 }, () => Math.floor(Math.random() * 100)); 
+
+    function generateTable() {
+        let tableBody = document.querySelector('#randomTable tbody');
+        let count = 0;
+
+        for (let i = 0; i < randomNumbers.length / 6; i++) {
+            let row = document.createElement('tr');
+
+            for (let j = 0; j < 6; j++) {
+                let cell = document.createElement('td');
+                cell.textContent = randomNumbers[count];
+
+                if (randomNumbers[count] >= 50) {
+                    cell.style.backgroundColor = 'orange';
+                }
+
+                row.appendChild(cell);
+                count++;
+            }
+
+            tableBody.appendChild(row);
+        }
+    }
+
+    generateTable();
+
+    function addRandomNumber() {
+        let newNumber = Math.floor(Math.random() * 100);
+        randomNumbers.push(newNumber);
+
+        let tableBody = document.querySelector('#randomTable tbody');
+        let lastRow = tableBody.lastElementChild;
+        let cellsInRow = lastRow.children.length;
+
+        if (cellsInRow < 6) {
+            let newCell = document.createElement('td');
+            newCell.textContent = newNumber;
+
+            if (newNumber >= 50) {
+                newCell.style.backgroundColor = 'orange';
+            }
+
+            lastRow.appendChild(newCell);
+        } else {
+            let newRow = document.createElement('tr');
+            let newCell = document.createElement('td');
+            newCell.textContent = newNumber;
+
+            if (newNumber >= 50) {
+                newCell.style.backgroundColor = 'orange';
+            }
+
+            newRow.appendChild(newCell);
+            tableBody.appendChild(newRow);
+        }
+    }
+</script>
+</body>
+</html>
